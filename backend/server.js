@@ -18,6 +18,9 @@ app.get('/', (req, res) => {
   });
 });
 
+
+
+
 // Start de server
 app.listen(PORT, () => {
   console.log(`Server draait op http://localhost:${PORT}`);
