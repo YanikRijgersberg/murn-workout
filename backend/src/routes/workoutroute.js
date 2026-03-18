@@ -1,43 +1,25 @@
-// src/routes/workoutRoutes.js
 import express from 'express';
-import Workout from '../models/Workout.js';
-// Maak router
+import {
+  getAllWorkouts,
+  getWorkoutById,
+  createWorkout,
+  updateWorkout,
+  deleteWorkout
+} from '../controllers/workoutController.js';
+
 const router = express.Router();
 
-// GET alle workouts
-router.get('/', (req, res) => {
-  res.json({ message: 'GET alle workouts' });
-});
+// READ
+router.get('/', getAllWorkouts);
+router.get('/:id', getWorkoutById);
 
-// GET één workout
-router.get('/:id', (req, res) => {
-  const { id } = req.params;
-  res.json({ message: `GET workout ${id}` });
-});
+// CREATE
+router.post('/', createWorkout);
 
-// POST nieuwe workout
-router.post('/', async (req, res) => {
-  const { title, load, reps } = req.body;
+// UPDATE
+router.patch('/:id', updateWorkout);
 
-  try {
-    const workout = await Workout.create({ title, reps, load });
-    res.status(201).json(workout);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-});
+// DELETE
+router.delete('/:id', deleteWorkout);
 
-// PATCH workout
-router.patch('/:id', (req, res) => {
-  const { id } = req.params;
-  res.json({ message: `PATCH workout ${id}` });
-});
-
-// DELETE workout
-router.delete('/:id', (req, res) => {
-  const { id } = req.params;
-  res.json({ message: `DELETE workout ${id}` });
-});
-
-// Exporteer router
 export default router;
