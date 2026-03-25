@@ -1,7 +1,8 @@
 // server.js
-import express from 'express';
-import mongoose from 'mongoose';
-import workoutRoutes from './src/routes/workoutroute.js';
+import express from "express";
+import mongoose from "mongoose";
+import workoutRoutes from "./src/routes/workoutroute.js";
+import cors from 'cors'
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -9,35 +10,27 @@ const PORT = process.env.PORT || 4000;
 // Middleware
 app.use(express.json());
 
+app.use(
+  cors({
+    origin: "http://localhost:5174",
+  }),
+);
 // Routes
-app.use('/api/workouts', workoutRoutes);
+app.use("/api/workouts", workoutRoutes);
 
 // Verbind met MongoDB en start server
-mongoose.connect(process.env.MONGO_URI)
+mongoose
+  .connect(process.env.MONGO_URI)
   .then(() => {
-    console.log('Verbonden met MongoDB');
-    
+    console.log("Verbonden met MongoDB");
+
     // Start server ALLEEN als database gelukt is
     app.listen(PORT, () => {
       console.log(`Server draait op http://localhost:${PORT}`);
     });
   })
   .catch((error) => {
-    console.error('Database verbinding mislukt:', error.message);
+    console.error("Database verbinding mislukt:", error.message);
   });
 
-// Test route - reageer op GET //
-app.get('/', (req, res) => {
-  res.json({ 
-    message: 'Mijn eerste backend!',
-    success: true
-  });
-});
 
-
-
-
-// Start de server
-app.listen(PORT, () => {
-  console.log(`Server draait op http://localhost:${PORT}`);
-})
