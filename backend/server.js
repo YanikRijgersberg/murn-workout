@@ -2,6 +2,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import workoutRoutes from "./src/routes/workoutroute.js";
+import authRoutes from "./src/routes/authRoutes.js"; 
 import cors from 'cors'
 
 const app = express();
@@ -15,8 +16,10 @@ app.use(
     origin: "http://localhost:5174",
   }),
 );
+
 // Routes
 app.use("/api/workouts", workoutRoutes);
+app.use("/api/auth", authRoutes); 
 
 // Verbind met MongoDB en start server
 mongoose
@@ -32,5 +35,3 @@ mongoose
   .catch((error) => {
     console.error("Database verbinding mislukt:", error.message);
   });
-
-
