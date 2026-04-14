@@ -3,7 +3,6 @@ import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 
-// Schema = regels voor workout
 const workoutSchema = new Schema({
   title: {
     type: String,
@@ -16,12 +15,16 @@ const workoutSchema = new Schema({
   load: {
     type: Number,
     required: true
+  },
+  userId: {                              // Nieuw
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'User'
   }
 }, {
   timestamps: true
 });
 
-// Model = object voor maken/ophalen/aanpassen/verwijderen
 const Workout = mongoose.model('Workout', workoutSchema);
 
 export default Workout;
